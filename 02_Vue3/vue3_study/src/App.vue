@@ -3,7 +3,7 @@
   <h3>msg: {{ msg }}</h3>
   <button @click="msg += '==='">更新数据</button>
   <hr>
-  <child :msg="msg"></child>
+  <child :msg="msg" msg2="真香" @xxx="xxx"></child>
 </template>
 
 <script lang="ts">
@@ -20,8 +20,12 @@ export default defineComponent({
   setup() {
     // 定义一个 Ref 类型的数据
     const msg = ref('what are you doing')
+    function xxx(txt: string) {
+      msg.value += txt
+    }
     return {
       msg,
+      xxx
     }
   }
 })
