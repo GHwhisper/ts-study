@@ -35,6 +35,7 @@ export default defineComponent({
     // 如果需要对进行操作，需要使用该 Ref 对象调用 value 属性的方式进行数据的操作
     // html 模版中不需要使用 .value 属性的写法
     // ref 一般用来定义一个基本类型的响应式数据
+    // count 的类型：Ref 类型
     const count = ref(0)
     console.log(count)
     // 方法
