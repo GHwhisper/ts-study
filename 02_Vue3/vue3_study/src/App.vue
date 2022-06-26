@@ -1,59 +1,72 @@
 <template>
-  <div>reactive 和 ref 的细节问题</div>
-  <h3>m1: {{ m1 }}</h3>
-  <h3>m2: {{ m2 }}</h3>
-  <h3>m3: {{ m3 }}</h3>
-  <hr>
-  <button @click="update">更新数据</button>
+  <h2>计算属性和监视</h2>
+  <fieldset>
+    <legend>姓名操作</legend>
+    姓氏：<input type="text" placeholder="请输入姓氏" v-model="user.firstName"><br/>
+    名字：<input type="text" placeholder="请输入名字" v-model="user.lastName"><br/>
+  </fieldset>
+  <fieldset>
+    <legend>计算属性和监视的演示</legend>
+    姓名：<input type="text" placeholder="显示姓名" v-model="fullName1"><br/>
+    姓名：<input type="text" placeholder="显示姓名" v-model="fullName2"><br/>
+    姓名：<input type="text" placeholder="显示姓名" v-model="fullName3"><br/>
+  </fieldset>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
+import { computed, defineComponent, reactive, ref, watch, watchEffect } from 'vue'
 
 export default defineComponent({
   name: 'App',
-
-  // 是Vue3的 composition API中2个最重要的响应式API
-  // ref用来处理基本类型数据, reactive用来处理对象(递归深度响应式)
-  // 如果用ref对象/数组, 内部会自动将对象/数组转换为reactive的代理对象
-  // ref内部: 通过给value属性添加getter/setter来实现对数据的劫持
-  // reactive内部: 通过使用Proxy来实现对对象内部所有数据的劫持, 并通过Reflect操作对象内部数据
-  // ref的数据操作: 在js中要.value, 在模板中不需要(内部解析模板时会自动添加.value)
-
   setup() {
-    // 通过 ref 的方式设置的数据
-    const m1 = ref('abc')
-    const m2 = reactive({
-      name: '小明',
-      wife: {
-        name: '小红'
+    // 定义一个响应式对象
+    const user = reactive({
+      // 姓氏
+      firstName: '东方',
+      // 名字
+      lastName: '不败'
+    })
+
+    // 通过计算属性的方式，实现第一个姓名的显示
+    // vue3 中的计算属性
+    // 如果计算属性的函数中如果只传入一个回调函数，表示的是 get
+
+    // 第一个姓名
+    // 返回的是一个 Ref 类型的对象
+    const fullName1 = computed(() => {
+      return user.firstName + '_' + user.lastName
+    })
+    // 第二个姓名
+    const fullName2 = computed({
+      get() {
+        return user.firstName + '_' + user.lastName
+      },
+      set(val: string) {
+        // console.log('=====', val)
+        const names = val.split('_')
+        user.firstName = names[0]
+        user.lastName = names[1]
       }
     })
-    // ref 也可以传入对象吗
-    const m3 = ref({
-      name: '小明',
-      wife: {
-        name: '小红'
-      }
+
+    // 第三个姓名
+    const fullName3 = ref('')
+    // 监视 --- 监视指定的数据
+    // watch(user, ({ firstName, lastName }) => {
+    //   fullName3.value = firstName + '_' + lastName
+    // }, { immediate: true, deep: true })
+    // immediate 默认会执行一次 watch，deep 深度监视
+
+    // 监视，不需要配置 immediate，本身默认就是进行监视（默认执行一次）
+    watchEffect(() => {
+      fullName3.value = user.firstName + '_' + user.lastName
     })
-    // 更新数据
-    const update = () => {
-      // ref 中如果放入的是一个对象，那么是经过了 reactive 的处理，形成了一个 Proxy 类型的对象
-      console.log(m3)
-      m1.value += '==='
-      m2.wife.name += '==='
-      // m3.value.name += '==='
-      m3.value.wife.name += '==='
-      console.log(m3.value.wife)
-    }
-    console.log(m1)
-    console.log(m2)
-    console.log(m3)
+
     return {
-      m1,
-      m2,
-      m3,
-      update,
+      user,
+      fullName1,
+      fullName2,
+      fullName3,
     }
   }
 })
