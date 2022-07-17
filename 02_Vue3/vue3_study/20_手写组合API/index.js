@@ -1,6 +1,5 @@
 // shallowReactive（浅劫持，浅监视，浅响应式）与 reactive（深的）
 
-
 // 定义一个 reactiveHandler 处理对象
 const reactiveHandler = {
   // 获取属性值
@@ -54,5 +53,58 @@ function reactive(target) {
     return new Proxy(target, reactiveHandler)
   }
   // 如果传入的数据是基本类型的数据，那么就直接返回
+  return target
+}
+
+
+// ==============================================================
+
+// shallowReadonly（浅只读）与 readonly（深度只读）
+
+// 定义一个 readonlyHandler 处理器
+const readonlyHandler = {
+  get(target, prop) {
+    const result = Reflect.get(target, prop)
+    console.log('拦截到了读取数据', prop, result)
+    return result
+  },
+  set(target, prop, value) {
+    console.warn('只能读取数据，不能修改或者添加数据')
+    return true
+  },
+  deleteProperty(target, prop) {
+    console.warn('只能读取数据，不能删除数据')
+    return true
+  }
+}
+
+// 定义一个 shallowReadonly 函数
+function shallowReadonly(target) {
+  // 需要判断当前的数据是不是对象
+  if (target && typeof target === 'object') {
+    return new Proxy(target, readonlyHandler)
+  }
+  return target
+}
+
+// 定义一个 readonly 函数
+function readonly(target) {
+  // 需要判断当前的数据是不是对象
+  if (target && typeof target === 'object') {
+    // 判断 target 是不是数组
+    if (Array.isArray(target)) {
+      // 遍历数组
+      target.forEach((item, index) => {
+        target[index] = readonly(item)
+      })
+    } else { // 判断 target 是不是对象
+      // 遍历对象
+      Object.keys(target).forEach(key => {
+        target[key] = readonly(target[key])
+      })
+    }
+    return new Proxy(target, readonlyHandler)
+  }
+  // 如果不是对象或数组，那么直接返回
   return target
 }

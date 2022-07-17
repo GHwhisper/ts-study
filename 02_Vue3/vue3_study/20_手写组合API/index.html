@@ -7,6 +7,7 @@
 <body>
   <script src="./index.js"></script>
   <script type="text/javascript">
+    // 测试 shallowReactive 和 reactive
     const proxyUser1 = shallowReactive({
       name: '小明',
       car: {
@@ -40,6 +41,38 @@
     // delete proxyUser2.name
     // 拦截到了读和删除的数据
     // delete proxyUser2.car.color
+
+    // ===================================================
+
+    // 测试 shallowReadonly 和 readonly
+    const proxyUser3 = shallowReadonly({
+      name: '小明',
+      cars: ['奔驰', '宝马']
+    })
+    // 可以读取
+    // console.log(proxyUser3.name)
+    // 不能修改
+    // proxyUser3.name = '=='
+    // 不能删除
+    // delete proxyUser3.name
+    // 拦截到了读取，但拦截不了深度的修改
+    // proxyUser3.cars[0] = '奥迪'
+    // 拦截到了读取，但可以删除
+    // delete proxyUser3.cars[0]
+
+    const proxyUser4 = readonly({
+      name: '小明',
+      cars: ['奔驰', '宝马']
+    })
+    // 拦截到了读取
+    // console.log(proxyUser4.name)
+    // console.log(proxyUser4.cars[0])
+    // 只读的
+    // proxyUser4.name = '哈哈'
+    // 只读的
+    // proxyUser4.cars[0] = '哈哈'
+    // delete proxyUser4.name
+    // delete proxyUser4.cars[0]
   </script>
 </body>
 </html>
