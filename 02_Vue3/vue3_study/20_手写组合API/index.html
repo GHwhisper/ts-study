@@ -73,6 +73,33 @@
     // proxyUser4.cars[0] = '哈哈'
     // delete proxyUser4.name
     // delete proxyUser4.cars[0]
+
+    // ===================================================
+
+    // 测试 shallowRef 和 ref
+    const ref1 = shallowRef({
+      name: '小明',
+      car: {
+        color: 'red'
+      }
+    })
+    // console.log(ref1.value)
+    // 劫持到读取
+    // ref1.value = '=='
+    // 劫持到读取，能修改，但劫持不到修改
+    // ref1.value.car = '=='
+
+    const ref2 = ref({
+      name: '小明',
+      car: {
+        color: 'red'
+      }
+    })
+    // console.log(ref2.value)
+    // 劫持到修改数据
+    // ref2.value = '=='
+    // 劫持到读取和修改
+    // ref2.value.car = '=='
   </script>
 </body>
 </html>

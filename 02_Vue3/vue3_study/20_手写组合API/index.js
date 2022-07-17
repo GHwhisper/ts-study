@@ -108,3 +108,39 @@ function readonly(target) {
   // 如果不是对象或数组，那么直接返回
   return target
 }
+
+
+// ==============================================================
+
+// 定义一个 shallowRef 函数
+function shallowRef(target) {
+  return {
+    // 保存 target
+    _value: target,
+    get value() {
+      console.log('劫持到了读取数据')
+      return this._value
+    },
+    set value(val) {
+      console.log('劫持到了修改数据，准备更新数据', val)
+      this._value = val
+    }
+  }
+}
+
+// 定义一个 ref 函数
+function ref(target) {
+  target = reactive(target)
+  return {
+    // 保存 target
+    _value: target,
+    get value() {
+      console.log('劫持到了读取数据')
+      return this._value
+    },
+    set value(val) {
+      console.log('劫持到了修改数据，准备更新数据', val)
+      this._value = val
+    }
+  }
+}
