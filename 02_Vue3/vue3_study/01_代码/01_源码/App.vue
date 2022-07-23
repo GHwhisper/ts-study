@@ -1,6 +1,6 @@
 <template>
   <!-- Vue2 中的 html 模版中必须要有一对根标签，Vue3 组件的 html 模版中可以没有根标签 -->
-  <img alt="Vue logo" src="./assets/logo.png">
+  <img alt="Vue logo" src="assets/logo.png">
   <!-- 使用子级组件 -->
   <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
 </template>
