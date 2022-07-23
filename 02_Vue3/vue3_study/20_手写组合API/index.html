@@ -100,6 +100,14 @@
     // ref2.value = '=='
     // 劫持到读取和修改
     // ref2.value.car = '=='
+
+    // ===================================================
+
+    console.log(isRef(ref({})))
+    console.log(isReactive(reactive({})))
+    console.log(isReadonly(readonly({})))
+    console.log(isProxy(reactive({})))
+    console.log(isProxy(readonly({})))
   </script>
 </body>
 </html>
