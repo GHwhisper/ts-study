@@ -3,7 +3,7 @@
     <div class="todo-wrap">
       <Header @add-todo="addTodo"></Header>
       <List :todos="todos" @del-todo="deleteTodo" @update-complete="updateTodo"></List>
-      <Footer></Footer>
+      <Footer :todos="todos" @check-all="checkAll"></Footer>
     </div>
   </div>
 </template>
@@ -59,11 +59,17 @@ export default defineComponent({
       if (todo) todo.isCompleted = isCompleted
     }
 
+    // 全选或全不选的方法
+    const checkAll = (isCompleted: boolean) => {
+      state.todos.forEach(todo => todo.isCompleted = isCompleted)
+    }
+
     return {
       ...toRefs(state),
       addTodo,
       deleteTodo,
       updateTodo,
+      checkAll,
     }
   }
 })
