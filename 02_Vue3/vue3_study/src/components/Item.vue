@@ -1,7 +1,7 @@
 <template>
   <li>
     <label>
-      <input type="checkbox" :checked="todo.isCompleted">
+      <input type="checkbox" v-model="isCompleted">
       <span>{{ todo.title }}</span>
     </label>
     <button class="btn btn-danger" @click="delTodo">删除</button>
@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 import { Todo } from '@/types/todo'
 
 export default defineComponent({
@@ -34,8 +34,20 @@ export default defineComponent({
       }
     }
 
+    // 计算属性的方式---来让当前的复选框选中/不选中
+    const isCompleted = computed({
+      get() {
+        return props.todo.isCompleted
+      },
+      set(val) {
+        // todo对象中的 isCompleted 属性操作
+        emit('update-complete', props.todo.id, val)
+      }
+    })
+
     return {
       delTodo,
+      isCompleted,
     }
   }
 })

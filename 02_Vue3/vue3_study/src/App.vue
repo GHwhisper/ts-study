@@ -2,7 +2,7 @@
   <div class="todo-container">
     <div class="todo-wrap">
       <Header @add-todo="addTodo"></Header>
-      <List :todos="todos" @del-todo="deleteTodo"></List>
+      <List :todos="todos" @del-todo="deleteTodo" @update-complete="updateTodo"></List>
       <Footer></Footer>
     </div>
   </div>
@@ -53,10 +53,17 @@ export default defineComponent({
       state.todos = state.todos.filter(todo => todo.id !== id)
     }
 
+    // 修改todo的isCompleted属性状态
+    const updateTodo = (id: number, isCompleted: boolean) => {
+      const todo = state.todos.find(todo => todo.id === id)
+      if (todo) todo.isCompleted = isCompleted
+    }
+
     return {
       ...toRefs(state),
       addTodo,
       deleteTodo,
+      updateTodo,
     }
   }
 })
