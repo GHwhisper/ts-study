@@ -1,7 +1,7 @@
 <template>
   <div class="todo-container">
     <div class="todo-wrap">
-      <Header></Header>
+      <Header @add-todo="addTodo"></Header>
       <List :todos="todos"></List>
       <Footer></Footer>
     </div>
@@ -38,8 +38,19 @@ export default defineComponent({
       ]
     })
 
+    // 添加数据的方法
+    const addTodo = (title: string) => {
+      const todo: Todo = {
+        id: Date.now(),
+        title,
+        isCompleted: false
+      }
+      state.todos.unshift(todo)
+    }
+
     return {
-      ...toRefs(state)
+      ...toRefs(state),
+      addTodo,
     }
   }
 })
