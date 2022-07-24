@@ -2,18 +2,20 @@
   <div class="todo-container">
     <div class="todo-wrap">
       <Header></Header>
-      <List></List>
+      <List :todos="todos"></List>
       <Footer></Footer>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, reactive, toRefs } from 'vue'
 // 引入直接的子级组件
 import Header from '@/components/Header.vue'
 import List from '@/components/List.vue'
 import Footer from '@/components/Footer.vue'
+// 引入接口
+import { Todo } from '@/types/todo'
 
 export default defineComponent({
   name: 'App',
@@ -21,6 +23,24 @@ export default defineComponent({
     Header,
     List,
     Footer,
+  },
+  // 数据应该用数组来存储，数组中的每个数据都是一个对象，对象中应该有三个属性（id, title, isCompleted）
+  // 把数据暂且定义在 App 父级组件
+
+  setup() {
+    // 定义一个数组数据
+    const state = reactive<{todos: Todo[]}>({
+      todos: [
+        { id: 1, title: '奔驰', isCompleted: false },
+        { id: 2, title: '宝马', isCompleted: true },
+        { id: 3, title: '奥迪', isCompleted: false },
+        { id: 4, title: '奥迪', isCompleted: false },
+      ]
+    })
+
+    return {
+      ...toRefs(state)
+    }
   }
 })
 </script>

@@ -1,8 +1,8 @@
 <template>
   <li>
     <label>
-      <input type="checkbox">
-      <span>xxxxx</span>
+      <input type="checkbox" :checked="todo.isCompleted">
+      <span>{{ todo.title }}</span>
     </label>
     <button class="btn btn-danger" style="display: none">删除</button>
   </li>
@@ -10,9 +10,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { Todo } from '@/types/todo'
 
 export default defineComponent({
   name: 'Item',
+  props: {
+    todo: Object as () => Todo // 函数返回的是 Todo 类型
+  }
 })
 </script>
 
