@@ -4,7 +4,7 @@
       <input type="checkbox" :checked="todo.isCompleted">
       <span>{{ todo.title }}</span>
     </label>
-    <button class="btn btn-danger" style="display: none">删除</button>
+    <button class="btn btn-danger">删除</button>
   </li>
 </template>
 
@@ -44,7 +44,11 @@ li label li input {
 li button {
   float: right;
   display: none;
-  margin-top: 3px;
+  margin-top: 5px;
+  color: #fff;
+  background-color: #f56c6c;
+  border: 1px solid #f56c6c;
+  border-radius: 4px;
 }
 
 li::before {
@@ -53,5 +57,13 @@ li::before {
 
 li:last-child {
   border-bottom: none;
+}
+
+li:hover {
+  background-color: lightpink;
+}
+
+li:hover button{
+  display: inline-block;
 }
 </style>
