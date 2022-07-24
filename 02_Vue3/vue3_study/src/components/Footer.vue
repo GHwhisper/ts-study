@@ -4,7 +4,7 @@
       <input type="checkbox" v-model="isCheckAll">
     </label>
     <span><span>已完成 {{ count }}</span> / 全部 {{ todos.length }}</span>
-    <button class="btn btn-danger">清除已完成</button>
+    <button class="btn btn-danger" @click="clearAllCompleted">清除已完成</button>
   </div>
 </template>
 
@@ -35,9 +35,14 @@ export default defineComponent({
       }
     })
 
+    const clearAllCompleted = () => {
+      emit('clear-all-completed')
+    }
+
     return {
       count,
       isCheckAll,
+      clearAllCompleted,
     }
   }
 })

@@ -3,7 +3,7 @@
     <div class="todo-wrap">
       <Header @add-todo="addTodo"></Header>
       <List :todos="todos" @del-todo="deleteTodo" @update-complete="updateTodo"></List>
-      <Footer :todos="todos" @check-all="checkAll"></Footer>
+      <Footer :todos="todos" @check-all="checkAll" @clear-all-completed="clearAllCompletedTodos"></Footer>
     </div>
   </div>
 </template>
@@ -64,12 +64,18 @@ export default defineComponent({
       state.todos.forEach(todo => todo.isCompleted = isCompleted)
     }
 
+    // 清理所有选中的数据
+    const clearAllCompletedTodos = () => {
+      state.todos = state.todos.filter(todo => !todo.isCompleted)
+    }
+
     return {
       ...toRefs(state),
       addTodo,
       deleteTodo,
       updateTodo,
       checkAll,
+      clearAllCompletedTodos,
     }
   }
 })
