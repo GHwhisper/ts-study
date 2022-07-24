@@ -2,7 +2,7 @@
   <div class="todo-container">
     <div class="todo-wrap">
       <Header @add-todo="addTodo"></Header>
-      <List :todos="todos"></List>
+      <List :todos="todos" @del-todo="deleteTodo"></List>
       <Footer></Footer>
     </div>
   </div>
@@ -48,9 +48,15 @@ export default defineComponent({
       state.todos.unshift(todo)
     }
 
+    // 删除数据的方法
+    const deleteTodo = (id: number) => {
+      state.todos = state.todos.filter(todo => todo.id !== id)
+    }
+
     return {
       ...toRefs(state),
       addTodo,
+      deleteTodo,
     }
   }
 })

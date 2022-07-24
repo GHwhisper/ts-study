@@ -1,6 +1,8 @@
 <template>
   <ul class="todo-main">
-    <item v-for="todo in todos" :key="todo.id" :todo="todo"></item>
+    <!--vue2 中，v-bind="$attrs"接收父级属性，v-on="$listeners"接收子级事件-->
+    <!--vue3 中，$listeners 被并入 $attrs-->
+    <item v-bind="$attrs" v-for="todo in todos" :key="todo.id" :todo="todo"></item>
   </ul>
 </template>
 
@@ -10,6 +12,7 @@ import Item from './Item.vue'
 
 export default defineComponent({
   name: 'List',
+  inheritAttrs: false,
   components: {
     Item,
   },

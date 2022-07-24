@@ -26,7 +26,6 @@ export default defineComponent({
 
 .todo-footer label {
   display: inline-block;
-  margin-left: 20px;
   cursor: pointer;
 }
 
@@ -48,6 +47,7 @@ export default defineComponent({
   border: 1px solid #dcdfe6;
   border-radius: 4px;
   background-color: #fff;
+  cursor: pointer;
 }
 
 .btn.btn-danger {
