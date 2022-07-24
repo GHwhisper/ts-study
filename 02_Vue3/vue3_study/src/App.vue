@@ -9,13 +9,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
+import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
 // 引入直接的子级组件
 import Header from '@/components/Header.vue'
 import List from '@/components/List.vue'
 import Footer from '@/components/Footer.vue'
 // 引入接口
 import { Todo } from '@/types/todo'
+import { saveTodos, readTodos } from '@/utils/localStorageUtils'
 
 export default defineComponent({
   name: 'App',
@@ -30,12 +31,13 @@ export default defineComponent({
   setup() {
     // 定义一个数组数据
     const state = reactive<{todos: Todo[]}>({
-      todos: [
-        { id: 1, title: '奔驰', isCompleted: false },
-        { id: 2, title: '宝马', isCompleted: true },
-        { id: 3, title: '奥迪', isCompleted: false },
-        { id: 4, title: '奥迪', isCompleted: false },
-      ]
+      todos: []
+    })
+    // 界面加载完后，过会儿读取数据
+    onMounted(() => {
+      setTimeout(() => {
+        state.todos = readTodos()
+      }, 500)
     })
 
     // 添加数据的方法
@@ -68,6 +70,14 @@ export default defineComponent({
     const clearAllCompletedTodos = () => {
       state.todos = state.todos.filter(todo => !todo.isCompleted)
     }
+
+    // 监视操作：如果 todos 数组的数据变化了，直接存储在浏览器缓存中
+    // watch(() => state.todos, value => {
+    //   // 保存到浏览器的缓存中
+    //   saveTodos(value)
+    // }, { deep: true })
+    // （优化写法）
+    watch(() => state.todos, saveTodos, { deep: true })
 
     return {
       ...toRefs(state),
