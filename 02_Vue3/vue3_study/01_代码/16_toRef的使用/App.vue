@@ -7,6 +7,8 @@
   <button @click="update">更新数据</button>
 
   <hr>
+  <!-- 注意：此处 age 是经过 toRef() 处理后成为 ref 对象的，
+    但 :age 接收的是 age.value（因为 .value 被省略了），而非 age 的 ref 对象 -->
   <child :age="age"></child>
 </template>
 
