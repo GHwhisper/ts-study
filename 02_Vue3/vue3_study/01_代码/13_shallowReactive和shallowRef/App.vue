@@ -57,6 +57,11 @@ export default defineComponent({
 
       // 更改m2的数据 --- shallowReactive
       // m2.name += '=='
+      /*
+        运行此行时，需把其他的注释掉，否则m2.car.name也会是更新到页面，
+        因为这几个数据处于一个环境，都被Fragment包着，Fragment是VNode的一种类型，其中一个触发改变，
+        对应模版领域会进行更新，所以其他的都会改变
+       */
       // m2.car.name += '==' // 测试该行时，需把 m2.name += '==' 注释掉，否则 m2.car.name 依然会改变
 
       // 更改m3的数据 --- ref
