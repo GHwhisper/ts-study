@@ -6,6 +6,11 @@
 https://www.bilibili.com/video/BV1ra4y1H7ih/?p=1&vd_source=7d9ad69b1d4eacce4fab0f3895bc9b05
 ```
 
+## 文档地址
+```
+https://24kcs.github.io/vue3_study/00_%E8%AF%BE%E7%A8%8B%E4%BB%8B%E7%BB%8D.html
+```
+
 ## 01_TypeScript
 
 ### 01_ts的第一次
