@@ -1,8 +1,9 @@
 # Vue3、TS 基础学习
 
-### 课程来源 
+### B站课程
 ```
-哔哩哔哩 尚硅谷Vue.JS教程快速入门到项目实战（Vue3/VueJS技术详解）
+尚硅谷Vue.JS教程快速入门到项目实战（Vue3/VueJS技术详解）
+https://www.bilibili.com/video/BV1ra4y1H7ih/?p=1&vd_source=7d9ad69b1d4eacce4fab0f3895bc9b05
 ```
 
 ## 01_TypeScript
